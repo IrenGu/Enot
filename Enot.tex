@@ -1,0 +1,1362 @@
+\documentclass[10pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+%\usepackage{listings}
+%\lstset{inputencoding=utf8,extendedchars=false,keepspaces=true,language=C++} 
+
+\usepackage{caption}
+\usepackage{verbatim}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{syntax}
+\usepackage{bytefield}
+\usepackage{multicol}
+\usepackage{longtable}
+
+
+
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+
+\usepackage[dvipsnames,usenames]{color}
+\usepackage{hyperref}
+\hypersetup{unicode,breaklinks=true}
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,calc,shapes.misc,shapes.geometric}
+%\usepackage[chapter]{minted}
+%\usepackage{ifplatform}
+
+\textheight 24.0cm
+\textwidth 16.2cm
+
+\voffset -2cm
+\hoffset .0cm
+\oddsidemargin 0.5mm
+\evensidemargin 0.5mm
+\topmargin -0.4mm
+\righthyphenmin=2
+\hfuzz=12.7pt
+\makeatletter
+%\renewcommand\section{\@startsection {section}{1}{\z@}%
+%                                   {3.5ex \@plus 1ex \@minus .2ex}%
+%                                   {2.3ex \@plus.2ex}%
+%                                   {\normalfont\Large\bfseries}}
+%\renewcommand{\thesection}{\arabic{section}}
+\@addtoreset{equation}{section}
+\@addtoreset{figure}{section}
+\@addtoreset{table}{section}
+
+\newlength{\chaprule}
+\newlength{\ATchapskip}
+\setlength{\chaprule}{0.4\p@} \setlength{\ATchapskip}{10\p@} \advance \ATchapskip by -1\chaprule
+\renewcommand{\@makechapterhead}[1]{%
+    \ifdim\chaprule>6\p@ \setlength{\chaprule}{6\p@}\fi
+    \vspace*{\ATchapskip}%
+    %\noindent\rule{\textwidth}{\chaprule}\par%
+    %\vskip 10\p@
+    {\parindent \z@ \normalfont \ifnum \c@secnumdepth >\m@ne {\huge\bfseries \@chapapp\space \thechapter.}
+        %\par\nobreak
+        %\vskip 8\p@
+        \fi \interlinepenalty\@M \huge\bfseries #1\par\nobreak \vskip 10\p@
+        %\noindent\rule{\textwidth}{\chaprule}\par%
+        \vskip\ATchapskip }}
+
+%\@addtoreset{lstlisting}{section}
+\makeatother
+
+%\iflinux
+%\else
+%\ifwindows
+%\makeatletter
+%\newcommand{\minted@write@detok}[1]{%
+%  \immediate\write\FV@OutFile{\detokenize{#1}}}%
+%
+%\newcommand{\minted@FVB@VerbatimOut}[1]{%
+%  \@bsphack
+%  \begingroup
+%    \FV@UseKeyValues
+%    \FV@DefineWhiteSpace
+%    \def\FV@Space{\space}%
+%    \FV@DefineTabOut
+%    %\def\FV@ProcessLine{\immediate\write\FV@OutFile}% %Old, non-Unicode version
+%    \let\FV@ProcessLine\minted@write@detok %Patch for Unicode
+%    \immediate\openout\FV@OutFile #1\relax
+%    \let\FV@FontScanPrep\relax
+%%% DG/SR modification begin - May. 18, 1998 (to avoid problems with ligatures)
+%    \let\@noligs\relax
+%%% DG/SR modification end
+%    \FV@Scan}
+%    \let\FVB@VerbatimOut\minted@FVB@VerbatimOut
+%
+%\renewcommand\minted@savecode[1]{
+%  \immediate\openout\minted@code\jobname.pyg
+%  \immediate\write\minted@code{\expandafter\detokenize\expandafter{#1}}%
+%  \immediate\closeout\minted@code}
+%\makeatother
+%\fi
+%\fi
+
+
+\newcommand{\dom}{\rm dom}
+\newcounter{rem}[section]
+\renewcommand{\therem}{\thesection.\arabic{rem}}
+\newenvironment{Remark}{\par\refstepcounter{rem} \bf Замечание \therem. \sl}{\rm\par}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+%\renewcommand{\thelstlisting}{\thesection.\arabic{lstlisting}}
+%\renewcommand{\lstlistingname}{Листинг}
+
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\theenumi)}
+\newcommand{\udc}[1]{УДК #1}
+
+\newcounter{lem}[section]
+\renewcommand{\thelem}{\thesection.\arabic{lem}}
+\newenvironment{Lemma}{\par\refstepcounter{lem}\bf Лемма \thelem. \sl}{\rm\par}
+
+\newcounter{cor}[section]
+\renewcommand{\thecor}{\thesection.\arabic{cor}}
+\newenvironment{Corrolary}{\par\refstepcounter{cor}\bf Следствие \thecor. \sl}{\rm\par}
+\newcounter{theor}[section]
+\renewcommand{\thetheor}{\thesection.\arabic{theor}}
+\newenvironment{Theorem}{\par\refstepcounter{theor}\bf Теорема \thetheor. \sl}{\rm\par}
+%\let \kappa=\ae
+\newcommand{\diag}{\mathop{\rm diag}}
+\newcommand{\epi}{\mathop{\rm epi}}
+\newenvironment{Proof}{\par\noindent\bf Доказательство.\rm}{ \par}
+
+\newcounter{exam}[section]
+\renewcommand{\theexam}{\thesection.\arabic{exam}}
+\newenvironment{Example}{\par\refstepcounter{exam}\bf Пример \theexam. \sl}{\rm\par}
+
+\newcounter{prob}[section]
+\renewcommand{\theprob}{\thesection.\arabic{prob}}
+\newenvironment{Problem}{\par\refstepcounter{prob}\bf Задача \theprob. \sl}{\rm\par}
+
+\newcounter{sol}[section]
+\renewcommand{\thesol}{\thesection.\arabic{sol}}
+\newenvironment{Solution}{\par\refstepcounter{sol}\bf Решение. \rm}{\rm\par}
+
+\newcounter{defin}[section]
+\renewcommand{\thedefin}{\thesection.\arabic{defin}}
+\newenvironment{Definition}{\par\refstepcounter{defin}\bf Определение \thedefin.\sl}{\rm\par}
+
+\newcounter{answ}[section]
+\renewcommand{\theansw}{\thesection.\arabic{answ}}
+\newenvironment{Answer}{\par\refstepcounter{answ}\theansw. \rm}{\rm\par}
+
+\newcounter{exerc}[section]
+\renewcommand{\theexerc}{\thesection.\arabic{exerc}}
+\newenvironment{Exercise}{\par\refstepcounter{exerc}\bf Упражнение \theexerc.\sl}{\rm\par}
+
+\newcounter{algor}[section]
+\renewcommand{\thealgor}{\thesection.\arabic{algor}}
+\newenvironment{Algorithm}[3]{\par\refstepcounter{algor}{\bf Алгоритм \thealgor. }{\sl #1}\par{\bf Вход: }{\sl #2}\par{\bf Выход: }\sl #3\par{\bf Метод.}\par}{\rm\par}
+
+\newcommand{\ljoq}{<<}
+\newcommand{\rjoq}{>>}
+\newcommand{\vraisup}{\mathop{\rm vraisup}}
+\newcommand{\pr}{\mathop{\rm pr}}
+\newcommand{\sgn}{\mathop{\rm sgn}}
+\newcommand{\epsclos}{\mathop{\text{$\varepsilon$--замыкание}}}
+\newcommand{\move}{\mathop{\text{переход}}}
+\newcommand{\closure}{\mathop{\text{ЗАМЫКАНИЕ}}}
+\newcommand{\goto}{\mathop{\text{ПЕРЕХОД}}}
+\newcommand{\ACTION}{\text{ДЕЙСТВИЕ}}
+\newcommand{\GOTO}{\text{ПЕРЕХОД}}
+\newcommand{\shift}[1]{\textbf{п}#1}
+\newcommand{\reduce}[1]{\textbf{св}#1}
+\newcommand{\access}{\textbf{доп}}
+%\captiondelim{. }
+
+\captionsetup{labelsep=period}
+
+%\setcounter{page}{3}
+%\setcounter{section}{1}
+
+
+\makeatletter
+\def\@seccntformat#1{\csname the#1\endcsname.\quad}
+\makeatother
+
+\algrenewcommand\algorithmicwhile{\textbf{пока}}
+\algrenewcommand\algorithmicdo{\textbf{ }}
+\algrenewcommand\algorithmicend{\textbf{конец}}
+\algrenewcommand\algorithmicif{\textbf{если}}
+\algrenewcommand\algorithmicthen{\textbf{то}}
+\algrenewtext{EndIf}{\textbf{всё}}
+\algrenewcommand\algorithmicfor{\textbf{для}}
+\algrenewtext{ForAll}{\textbf{для всех }}
+\algrenewcommand\algorithmicelse{\textbf{иначе}}
+\algrenewtext{ElsIf}{\textbf{инес }}
+\algrenewtext{Procedure}{\textbf{алг }}
+\algrenewtext{EndProcedure}{\textbf{кон }}
+
+\newcommand{\nad}[2]{\genfrac{}{}{0pt}{0}{#1}{#2}}
+
+\newcommand{\nullable}{\mathop{\textit{зануляется}}}
+\newcommand{\firstpos}{\mathop{\textit{первые}}}
+\newcommand{\lastpos}{\mathop{\textit{последние}}}
+\newcommand{\followpos}{\mathop{\textit{следующие}}}
+
+\newcommand{\myor}{\mathop{\textbf{или}}}
+
+\newcommand{\myand}{\mathop{\textbf{и}}}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\renewcommand{\syntleft}{\normalfont\itshape}
+\renewcommand{\syntright}{}
+%\renewcommand{\listingscaption}{Листинг}
+%\renewcommand{\listoflistingscaption}{Список листингов}
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\vspace*{8cm}
+
+{\bf\Huge
+Сообщение о языке программирования Енот
+
+} \vspace{2.5cm}
+
+
+\LARGE
+\textbf{Гуськова И.А.}
+
+ \vspace{2.5cm}
+
+{16 марта 2019г.}
+
+\end{center}
+\end{titlepage}
+\tableofcontents
+
+\newpage
+
+\chapter{Язык}
+    \section{Лексемы и форма описания синтаксиса}
+
+Синтаксис языка программирования Енот описан как словесно, так и с помощью расширенных формул Бэкуса--Наура (РБНФ). В РБНФ формула состоит из двух частей: первая часть содержит имя определяемого понятия (в используемой здесь версии РБНФ оно выделяется зелёным цветом), а затем, после метасимвола \textcolor{Green}{$\to$}, идёт вторая часть, содержащая определение понятия. В данном описании кроме метасимвола \textcolor{Green}{$\to$} будут также использоваться следующие метасимволы:
+
+\textcolor{Green}{$|$} --- означает\ \glqq или\grqq;
+
+\textcolor{Green}{$\{\}$} --- содержимое этих скобок может повторяться любое число раз, в том числе и ни разу;
+
+\textcolor{Green}{$( )$} --- эти скобки группируют конструкции;
+
+\textcolor{Green}{$[ ]$} --- содержимое данных скобок является необязательным.
+
+Текст программы на языке Енот состоит из лексем. В языке имеется четыре класса лексем:
+\begin{enumerate}
+    \item ключевые слова и идентификаторы;
+    \item числа;
+    \item знаки операций и разделители;
+    \item литёры и строки.
+\end{enumerate}
+Никакая лексема не может разбиваться на части пробельными символами (т.е. пробелами, табуляциями и концами строк) или комментариями. Опишем каждый класс лексем.
+        \subsection{Ключевые слова и идентификаторы}
+Идентификатор --- это последовательность русских и латинских букв, десятичных цифр и знаков подчёркивания. Идентификатор должен начинаться с буквы или со знака подчёркивания.
+Прописные и строчные буквы считаются различными. Идентификатор не может совпадать ни с каким ключевым словом. Ключевые слова языка записываются строчными буквами и в настоящем
+описании выделяются жирным шрифтом. Ниже приведён список ключевых слов:        
+\begin{multicols}{4}
+\bf
+
+беззнач
+
+беззнач8
+
+беззнач16
+
+беззнач32
+
+беззнач64
+
+беззнач128
+
+бол
+
+бесконечно
+
+вернуть
+
+выбор
+
+выдел
+
+выход
+
+для
+
+если
+
+иначе
+
+инес
+
+правда
+
+IC
+
+IC32
+
+IC64
+
+IC80
+
+IC128
+
+пост
+
+логик
+ 
+логик8
+
+логик16
+
+логик32
+
+логик64
+
+неправда
+
+мал
+
+массив
+
+мод
+
+ничего
+
+очищение
+
+перемен
+
+перечисление
+
+повтор
+
+пока
+
+покуда
+
+разбор
+
+R
+
+R32
+
+R64
+
+R80
+
+R128
+
+символ
+
+строчка
+
+структ
+
+ссылочка
+
+тип
+
+то
+
+фун
+
+целN
+
+целN8
+
+целN16
+
+целN32
+
+целN64
+
+целN128
+
+чистая
+
+шапка
+\end{multicols}
+
+Примеры идентификаторов: \texttt{котенок}, \texttt{Гав}, \texttt{_s1994}, \texttt{Кощей_Бессмертный}, \texttt{Черепашка}.    
+
+
+        \subsection{Числа}
+Числа --- это беззнаковые целые и вещественные константы, а также комплексные константы. Знаковые константы --- это беззнаковые константы, к которым применена унарная операция смены знака
+(операция\ \glqq$-$\grqq). Запись в РБНФ:
+
+\textcolor{Green}{\syntax{\synt{число}$\to$\synt{целое}|\synt{вещественное}|\synt{комплексное}\\
+%
+\indent\synt{целое}$\to$\synt{десятичное}|\synt{шестнадцатиричное}|\synt{двоичное}|\synt{восьмеричное}\\
+%
+\indent\synt{десятичное}$\to$\synt{десятичная_цифра}\{\synt{десятичная_цифра}\}\\
+%
+\indent\synt{десятичная_цифра}$\to$\textcolor{Black}{0}|\textcolor{Black}{1}|\textcolor{Black}{2}|\textcolor{Black}{3}|\textcolor{Black}{4}|\textcolor{Black}{5}|%
+\textcolor{Black}{6}|\textcolor{Black}{7}|\textcolor{Black}{8}|\textcolor{Black}{9}\\
+%
+\indent\synt{шестнадцатиричное}$\to$\textcolor{Black}{0}(\textcolor{Black}{x}|\textcolor{Black}{X})\synt{шестн_цифра}\{\synt{шестн_цифра}\}\\
+%
+\indent\synt{шестн_цифра}$\to$\textcolor{Black}{0}|\textcolor{Black}{1}|\textcolor{Black}{2}|\textcolor{Black}{3}|\textcolor{Black}{4}|\textcolor{Black}{5}|%
+\textcolor{Black}{6}|\textcolor{Black}{7}|\textcolor{Black}{8}|\textcolor{Black}{9}|\textcolor{Black}{A}|\textcolor{Black}{B}|\textcolor{Black}{C}|\textcolor{Black}{D}|%
+\textcolor{Black}{E}|\textcolor{Black}{F}|\textcolor{Black}{a}|\textcolor{Black}{b}|\textcolor{Black}{c}|\textcolor{Black}{d}|\textcolor{Black}{e}|\textcolor{Black}{f}\\
+%
+\indent\synt{двоичное}$\to$\textcolor{Black}{0}(\textcolor{Black}{b}|\textcolor{Black}{B})\synt{двоичн_цифра}\{\synt{двоичн_цифра}\}\\
+%
+\indent\synt{двоичн_цифра}$\to$\textcolor{Black}{0}|\textcolor{Black}{1}\\
+%
+\indent\synt{восьмеричное}$\to$\textcolor{Black}{0}(\textcolor{Black}{o}|\textcolor{Black}{O})\synt{восьмеричн_цифра}\{\synt{восьмеричн_цифра}\}\\
+%
+\indent\synt{восьмеричн_цифра}$\to$\textcolor{Black}{0}|\textcolor{Black}{1}|\textcolor{Black}{2}|\textcolor{Black}{3}|\textcolor{Black}{4}|\textcolor{Black}{5}|%
+\textcolor{Black}{6}|\textcolor{Black}{7}\\
+%
+\indent\synt{вещественное}$\to$\synt{целая_часть}[\textcolor{Black}{.}\synt{дробн_часть}](\textcolor{Black}{E}|\textcolor{Black}{e})%
+[(\textcolor{Black}{$+$}|\textcolor{Black}{$-$})\synt{порядок}][\synt{точность}]\\
+%
+\indent\synt{целая_часть}$\to$\synt{десятичное}\\
+%
+\indent\synt{дробн_часть}$\to$\synt{десятичное}\\
+%
+\indent\synt{порядок}$\to$\synt{десятичное}\\
+%
+\indent\synt{точность}$\to$\synt{одинарная}|\synt{двойная}|\synt{расш}|\synt{четырёхкр}\\
+%
+\indent\synt{одинарная}$\to$\textcolor{Black}{f}\\
+%
+\indent\synt{двойная}$\to$\textcolor{Black}{d}\\
+%
+\indent\synt{расш}$\to$\textcolor{Black}{x}\\
+%
+\indent\synt{четырёхкр}$\to$\textcolor{Black}{q}\\ 
+%
+\indent\synt{комплексное}$\to$\synt{вещественное}\textcolor{Black}{i}
+}}
+
+        \subsection{Литёры и строки}
+Литёра --- это либо произвольный символ, заключённый в одинарные (') или двойные (\verb1"1) кавычки, либо выражение вида
+\$\textcolor{Green}{\syntax{\synt{целое}}}. Строка --- это либо последовательность из ноль или более символов, заключённых в кавычки; либо последовательность литёр, заданных
+посредством кодов; либо чередование того и другого. Под литёрой, заданной посредством кода, понимается выражение вида \$\textcolor{Green}{\syntax{\synt{целое}}}.
+Открывающая кавычка должна совпадать с закрывающей. Если в строке требуется записать кавычку, совпадающую с открывающей, то кавычка должна быть продублирована.
+
+Примеры строк:\\[0.1mm]
+
+\noindent'{}' --- пустая строка\\[0.1mm]
+
+\noindent\texttt{'Хорошо живёт на свете Винни-Пух!'\$13\$10}\\[0.1mm]
+
+\noindent\texttt{'У попа была собака, он её любил.\\
+Она съела кусок мяса, --- он её убил.\\
+В землю закопал и надпись надписал: ...'}\\[0.1mm]
+
+\noindent\texttt{'Привет лунатикам!'\$0}
+
+        \subsection{Знаки операций и разделители}
+\begin{center}
+\begin{multicols}{10}
+\tt
+\noindent[
+
+\noindent]
+
+\noindent(\\
+)\\
+<-\\
+!\\
+\~{ }\\
+\^{ }\\
+@\\
+.\\
+:\\
+;\\
+==\\
+\#\\
++\\
+-\\
+*\\
+/\\
+\%\\
+\verb"\"\\
+|\\
+\&\\
+<\\
+>\\
+?\\
+\{.\\
+.\}\\
+\{\\
+\}\\
++|\\
++{}+\\
+-{}-\\
++.\\
+-.\\
+*.\\
+/.\\
+\%.\\
+%\verb"/\"\\
+..\\
+?.\\
+??\\
+<=\\
+>=\\
+!=\\
+**\\
+\^{ }\^{ }\\
+||\\
+\&\&\\
+<{}<\\
+>{}>\\
+\#\#\\
+=\\
+@@\\
+%|:\\
+\~{ }|\\
+\~{ }\&\\
+!||\\
+!\&\&\\
+**.\\
+\#\#\#\\
++{}+<\\
+-{}-<\\
++=\\
+-=\\
+*=\\
+/=\\
+\%:=\\
+\verb"\:="\\
+:=\\
+|=\\
+\&=\\
+\^{ }=\\
+||.\\
+\&\&.\\
++.=\\
+-.=\\
+*.=\\
+/.=\\
+\%.=\\
+||=\\
+\&\&=\\
+\^{ }\^{ }:=\\
+**=\\
+<{}<=\\
+>{}>=\\
+%\verb"/\:="\\
+\~{ }|=\\
+\~{ }\&=\\
+!||.\\
+!\&\&.\\
+||.=\\
+\&\&.=\\
+**.=\\
+!||=\\
+!\&\&=\\
+!||.=\\
+!\&\&.=%
+\end{multicols}
+\end{center}
+
+Кроме лексем в любом месте программы могут встречаться комментарии. Комментарий --- это последовательность любых символов, заключённых между скобками (* и *). Комментарии
+могут быть вложенными.
+
+
+Приведём пример:
+\begin{verbatim}
+т:=sin(x)
+(* Это комментарий первого уровня вложенности.
+   (* Это - второго.
+      (* А это - третьего. *)
+   *)
+*)
+\end{verbatim}
+
+    \section{Структура программы}
+Структура программы на языке Енот выглядит так:
+
+\syntax{\noindent\textbf{модуль} \textcolor{Green}{\synt{имя_модуля}}\\
+\{\\
+\textcolor{Green}{\{\synt{описание}\}}\\
+\}%
+}
+
+Здесь
+
+\noindent\textcolor{Green}{\syntax{\synt{имя_модуля}}} --- идентификатор, являющийся именем данного модуля;
+
+\noindent\textcolor{Green}{\syntax{\synt{описание}}} --- описание типов, переменных, констант, алгоритмов и операций.
+
+
+    \section{Описания}
+
+Область видимости объекта \texttt{x} (здесь под объектом понимается тип, переменная, константа, алгоритм или операция) текстуально распространяется от точки его описания до
+конца блока (модуля, тела составного оператора, тела подпрограммы), к которому принадлежит описание и по отношению к которому объект, таким образом, считается локальным. Из
+этой области исключаются области видимости объектов с таким же именем, описанных в блоках, вложенных в данный. Правила видимости таковы.
+\begin{enumerate}
+    \item Идентификатор может обозначать только один объект в данной области видимости (т.е. никакой идентификатор не может быть объявлен в блоке дважды).
+    \item На объект можно сослаться только в его области видимости.
+    \item Описание типа \texttt{T}, содержащее ссылки на другой тип \texttt{T}$_1$, может стоять в точках, где \texttt{T}$_1$ еще не известен. Описание типа \texttt{T}$_1$
+должно следовать далее в том же блоке, в котором локализован \texttt{T}.
+    \item Заголовок функции может быть приведён до того, как будет дано полное определение.
+\end{enumerate}
+
+        \subsection{Описание типов}
+Описание типов выглядит так:
+\begin{center}
+\noindent\textbf{тип} \textcolor{Green}{\syntax{\synt{имя_типа}\textcolor{Black}{\texttt{=}}%
+\synt{определение_типа}\{\textcolor{Black}{\texttt{;}}\synt{имя_типа}\textcolor{Black}{\texttt{=}}%
+\synt{определение_типа}\}}}
+\end{center}
+
+Здесь \textcolor{Green}{\syntax{\synt{имя_типа}}} --- идентификатор, являющийся именем определяемого типа; \textcolor{Green}{\syntax{\synt{определение_типа}}} --- либо
+простейшее определение типа, либо определение алгебраического типа данных.
+
+Алгебраические типы данных будут подробно рассмотрены в разделе, посвящённом таким типам. Здесь же поясним понятие простейшего определения типа.
+
+Простейшие определения типов есть двух категорий:
+\begin{enumerate}
+    \item стандартные типы;
+    \item простейшие определения типов, задаваемые пользователем.
+\end{enumerate}
+
+Стандартные типы можно разделить на четыре вида:
+\begin{enumerate}
+    \item логические типы;
+    \item символьные типы;
+    \item числовые типы;
+    \item пустой тип.
+\end{enumerate}
+
+В свой черёд, числовые типы могут быть следующих подвидов:
+\begin{enumerate}
+    \item целочисленные типы;
+    \item вещественные типы;
+    \item комплексные типы.
+\end{enumerate}
+
+К простейшим определениям типов, задаваемым пользователем, относятся:
+\begin{enumerate}
+    \item имя типа;
+    \item определение типа--указателя;
+    \item определение типа указателя на функцию;
+    \item определение типа--массива.
+\end{enumerate}
+
+Приведём пример определения типов:
+
+\noindent\textbf{тип}\phantom{m}\texttt{A = }\textbf{мал мал N}\texttt{;}\\
+\phantom{типm}\texttt{B = }\textbf{мал N}\texttt{;}\\
+\phantom{типm}\texttt{C = }\textbf{N}\texttt{;}\\
+\phantom{типm}\texttt{D = }\textbf{бол N}
+
+Здесь типы \texttt{A} и \textbf{мал мал n} --- взаимозаменяемы.
+
+Для каждого типа данных можно узнать размер переменной этого типа, для чего перед именем типа или переменной этого типа нужно поставить знак операции \texttt{\#\#}.
+
+Для динамических массивов операция \texttt{\#\#} даёт размер не самого этого значения, а размер служебной информации. Чтобы узнать размер сам\'{о}го
+значения динамического массива, нужно перед именем переменной поставить знак операции \texttt{\#\#\#}.
+
+        \subsubsection{Логические типы}
+
+Переменная логического типа может принимать только два значения: \textbf{правда} или \textbf{неправда}. Логический тип выглядит так:
+\begin{center}
+\noindent\textcolor{Green}{\syntax{(\{\textcolor{Black}{\textbf{бол}}\}|\{\textcolor{Black}{\textbf{мал}}\})}\textcolor{Black}{\textbf{логик}} }
+\end{center}
+
+Размер переменной типа \textbf{логик} зависит от реализации, но не может превышать размера машинного слова. Также имеются логические типы конкретных размеров, а именно, типы \textbf{логик8}, \textbf{логик16},
+\textbf{логик32}, \textbf{логик64}, переменные которых имеют размер в 1, 2, 4 и 8 байт соответственно.
+
+Над логическими значениями определены следующие операции:
+\begin{longtable}{ll}
+\texttt{||}             & логическое\ \glqq или\grqq\ (сокращённое вычисление)      \\
+\texttt{||.}            & логическое\ \glqq или\grqq\ (полное вычисление)           \\
+\texttt{!||}            & логическое\ \glqq не--или\grqq\ (сокращённое вычисление)  \\
+\texttt{!||.}           & логическое\ \glqq не--или\grqq\ (полное вычисление)       \\
+\texttt{\&\&}           & логическое\ \glqq и\grqq\ (сокращённое вычисление)        \\
+\texttt{\&\&.}          & логическое\ \glqq и\grqq\ (полное вычисление)             \\
+\texttt{!\&\&}          & логическое\ \glqq не--и\grqq\ (сокращённое вычисление)    \\
+\texttt{!\&\&.}         & логическое\ \glqq не--и\grqq\ (полное вычисление)         \\
+\texttt{\^{ }\^{ }}     & логическое\ \glqq исключающее или\grqq\                   \\
+\texttt{!}              & логическое\ \glqq не\grqq\                                \\
+\texttt{==}             & равно                                                     \\
+\texttt{!=}             & не равно                                                  \\
+\end{longtable}
+        
+
+Все логические типы попарно совместимы между собой. Термин\ \glqq полное вычисление\grqq\ означает, что вычисляются все аргументы операции; а термин\ \glqq сокращённое
+вычисление\grqq\ --- что вычисляется лишь часть аргументов.
+
+Приведём таблицы истинности логических операций.
+\begin{center}
+\vspace{5mm}
+\begin{longtable}{|l|l|l|l|l|}  \hline
+\texttt{x}          & \texttt{y}        & \texttt{x||y}     & \texttt{x\&\&y}   & \texttt{x\^{ }\^{ }y} \\  \hline
+\textbf{неправда}       & \textbf{неправда}     & \textbf{неправда}     & \textbf{неправда}     & \textbf{неправда}         \\  \hline
+\textbf{неправда}       & \textbf{правда}   & \textbf{правда}   & \textbf{неправда}     & \textbf{правда}       \\  \hline
+\textbf{правда}     & \textbf{неправда}     & \textbf{правда}   & \textbf{неправда}     & \textbf{правда}       \\  \hline
+\textbf{правда}     & \textbf{правда}   & \textbf{правда}   & \textbf{правда}   & \textbf{неправда}         \\  \hline
+\end{longtable}
+
+\begin{longtable}{|l|l|l|l|}  \hline
+\texttt{x}          & \texttt{y}        & \texttt{(x!||y)$\equiv$x||(!y)}   & \texttt{(x!\&\&y)$\equiv$x\&\&(!y)}   \\  \hline
+\textbf{неправда}       & \textbf{неправда}     & \textbf{правда}                   & \textbf{неправда}                         \\  \hline
+\textbf{неправда}       & \textbf{правда}   & \textbf{неправда}                     & \textbf{неправда}                         \\  \hline
+\textbf{правда}     & \textbf{неправда}     & \textbf{правда}                   & \textbf{правда}                       \\  \hline
+\textbf{правда}     & \textbf{правда}   & \textbf{неправда}                     & \textbf{неправда}                         \\  \hline
+\end{longtable}
+
+
+\begin{longtable}{|l|l|}  \hline
+ \texttt{x}         & \texttt{!x}       \\  \hline
+\textbf{неправда}       & \textbf{правда}   \\  \hline
+\textbf{правда}     & \textbf{неправда}     \\  \hline
+\end{longtable}
+\end{center}
+
+К операциям с логическими значениями тесно примыкают тернарные операции \texttt{?:} и \texttt{?.:}. Поясним смысл операций \texttt{?:} и \texttt{?.:}.
+
+1) Операция \texttt{?:}. Выражение вида \texttt{S?A:B} эквивалентно следующей последовательности действий:
+{\renewcommand{\theenumi}{\asbuk{enumi}}
+\begin{enumerate}
+    \item вычислить логическое выражение \texttt{S}, и выражения \texttt{A} и \texttt{B};
+    \item
+если (\texttt{S=}\textbf{правда}) то\\
+\phantom{mm}выдать \texttt{A}\\
+иначе\\
+\phantom{mm}выдать \texttt{B}\\
+всё
+\end{enumerate}
+}
+
+\begin{Remark}
+Если в системе команд процессора имеется команда условной пересылки, то для вычислений в пункте б) \textbf{должна использоваться именно эта команда}.
+\end{Remark}
+
+2) Операция \texttt{?.:}. Выражение вида \texttt{S?.A:B} эквивалентно следующей последовательности действий:
+{\renewcommand{\theenumi}{\asbuk{enumi}}
+\begin{enumerate}
+    \item вычислить логическое выражение \texttt{S};
+    \item
+если (\texttt{S=}\textbf{правда}) то\\
+\phantom{mm}вычислить выражение \texttt{A} и выдать полученное значение\\
+иначе\\
+\phantom{mm}вычислить выражение \texttt{B} и выдать полученное значение\\
+всё
+\end{enumerate}
+}
+
+\begin{Remark}
+Здесь для вычислений в пункте б) \textbf{должна использоваться команда сравнения с последующим условным переходом}.
+\end{Remark}
+
+        \subsubsection{Символьные типы}
+Переменная символьного типа может хранить любой символ, доступный в конкретной реализации. Символьный тип выглядит так:
+\begin{center}
+\noindent\textbf{символ}
+\end{center}
+
+Для символьных данных определены лишь операции отношения и операция присваивания. Ниже приведён список операций отношения:
+
+\begin{tabular}{ll}
+ \texttt{<}         & меньше                                        \\
+ \texttt{>}         & больше                                        \\
+ \texttt{<=}        & меньше или равно                              \\
+ \texttt{>=}        & больше или равно                              \\
+ \texttt{==}        & равно                                         \\
+ \texttt{!=}        & не равно                                      \\
+\end{tabular}
+
+        \subsubsection{Строковые типы}
+Переменная строкового типа хранит строковые значения. Строковый тип выглядит так:
+\begin{center}
+\noindent\textbf{строчка}
+\end{center}
+
+Для строковых данных определены операции отношения, операция присваивания, и операция обращения к символу строки по его индексу. Также определена операция конкатенации (склейки) строк, обозначаемая знаком \glqq\texttt{+}\grqq.
+
+        \subsubsection{Числовые типы}
+            \paragraph{Целочисленные типы.}Переменные целочисленных типов предназначены для хранения целых чисел. Целочисленный тип выглядит так:
+\begin{center}
+\noindent\textcolor{Green}{(\syntax{(\{\textcolor{Black}{\textbf{бол}}\}|\{\textcolor{Black}{\textbf{мал}}\})%
+[\textcolor{Black}{\textbf{беззнач}}]}\textcolor{Black}{\textbf{n}}|\textcolor{Black}{\textbf{беззнач8}}|\textcolor{Black}{\textbf{беззнач16}}|\textcolor{Black}{\textbf{беззнач32}}|\textcolor{Black}{\textbf{беззнач64}}|\\
+\textcolor{Black}{\textbf{беззнач128}}|\textcolor{Black}{\textbf{целN8}}|\textcolor{Black}{\textbf{целN16}}|\textcolor{Black}{\textbf{целN32}}|\textcolor{Black}{\textbf{целN64}}|\textcolor{Black}{\textbf{целN128}})}
+\end{center}
+
+Допустимые операции:
+\begin{longtable}{ll}
+\texttt{+} (бинарный)   & целочисленное сложение                            \\
+\texttt{+} (унарный)    & подтверждение знака                               \\
+\texttt{-} (бинарный)   & целочисленное вычитание                           \\
+\texttt{-} (унарный)    & изменение знака                                   \\
+\texttt{+{}+}           & следующее значение                                \\
+\texttt{-{}-}           & предыдущее значение                               \\
+\texttt{*}              & целочисленное умножение                           \\
+\texttt{/}              & целочисленное деление                             \\
+\texttt{\%}             & целочисленный остаток от деления                  \\
+\texttt{**}             & целочисленное возведение в степень                \\
+\texttt{|}              & поразрядное\ \glqq или\grqq\                      \\
+\texttt{\~{ }|}         & поразрядное\ \glqq не--или\grqq\                  \\
+\texttt{\&}             & поразрядное\ \glqq и\grqq\                        \\
+\texttt{\~{ }\&}        & поразрядное\ \glqq не--и\grqq\                    \\
+\texttt{\~{ }}          & поразрядное\ \glqq не\grqq\                       \\
+\texttt{\^{ }}          & поразрядное\ \glqq исключающее или\grqq\          \\
+\texttt{<{}<}           & сдвиг влево                                       \\
+\texttt{>{}>}           & сдвиг вправо                                      \\
+\texttt{<}              & меньше                                            \\
+\texttt{>}              & больше                                            \\
+\texttt{<=}             & меньше или равно                                  \\
+\texttt{>=}             & больше или равно                                  \\
+\texttt{==}             & равно                                             \\
+\texttt{!=}             & не равно                                          \\
+\end{longtable}
+
+
+            \paragraph{Вещественные типы.}Переменные вещественных типов предназначены для хранения вещественных чисел. Вещественный тип выглядит так:
+\begin{center}
+\noindent\textcolor{Green}{\syntax{(\{\textcolor{Black}{\textbf{бол}}\}|\{\textcolor{Black}{\textbf{мал}}\})}\textcolor{Black}{\textbf{R}}|\textcolor{Black}{\textbf{R32}}|\textcolor{Black}{\textbf{R64}}|\textcolor{Black}{\textbf{R80}}|\textcolor{Black}{\textbf{R128}}}
+\end{center}
+
+Допустимые операции:
+\begin{longtable}{ll}
+\texttt{+.}             & сложение                                          \\
+\texttt{+} (унарный)    & подтверждение знака                               \\
+\texttt{-.}             & вычитание                                         \\
+\texttt{-} (унарный)    & изменение знака                                   \\
+\texttt{*.}             & умножение                                         \\
+\texttt{/.}             & деление                                           \\
+\texttt{\%.}            & вещественный остаток от деления                   \\
+\texttt{**.}            & вещественное возведение в степень                 \\
+\texttt{<}              & меньше                                            \\
+\texttt{>}              & больше                                            \\
+\texttt{<=}             & меньше или равно                                  \\
+\texttt{>=}             & больше или равно                                  \\
+\texttt{==}             & равно                                             \\
+\texttt{!=}             & не равно                                          \\
+\end{longtable}
+
+            \paragraph{Комплексные типы.}Переменные комплексных типов предназначены для хранения комплексных типов. Комплексный тип выглядит так:
+\begin{center}
+\noindent\textcolor{Green}{\syntax{(\{\textcolor{Black}{\textbf{бол}}\}|\{\textcolor{Black}{\textbf{мал}}\})}\textcolor{Black}{\textbf{IС}}|\textcolor{Black}{\textbf{IС32}}|\textcolor{Black}{\textbf{IС64}}|\textcolor{Black}{\textbf{IС80}}|\textcolor{Black}{\textbf{IС128}}}
+\end{center}
+
+Допустимые операции:
+\begin{longtable}{ll}
+\texttt{+.}             & сложение                                          \\
+\texttt{+} (унарный)    & подтверждение знака                               \\
+\texttt{-.}             & вычитание                                         \\
+\texttt{-} (унарный)    & изменение знака                                   \\
+\texttt{*.}             & умножение                                         \\
+\texttt{/.}             & деление                                           \\
+\texttt{==}             & равно                                             \\
+\texttt{!=}             & не равно                                          \\
+\end{longtable}
+        
+
+        \subsubsection{Пустой тип}
+Пустой тип --- это тип \textbf{ничего}. Тип \textbf{ничего} может быть либо базовым типом указателя, либо типом значения функции. Ни в каких других целях тип \textbf{ничего} применяться не может. При этом \texttt{\#\#}\textbf{ничего}$=0$, т.е. размер типа \textbf{ничего} равен нулю.
+
+        \subsubsection{Кортежи}
+Кортеж --- это упорядоченный набор конечного числа элементов, вообще говоря, разных типов. Тип--кортеж выглядит так:
+\begin{center}
+\noindent\textcolor{Green}{\textcolor{Black}{(:}[\syntax{тип_элемента}\{\textcolor{Black}{,}\syntax{тип_элемента}\}]\textcolor{Black}{:)}}
+\end{center}        
+   
+Здесь \textcolor{Green}{\syntax{\synt{тип_элемента}}}  --- тип соответствующего элемента кортежа. Этот тип может быть либо именем типа, либо указателем, либо типом указателя на функцию, либо встроенным типом, либо кортежем.
+
+Если для каждого элемента кортежа определена одна и та же операция отношения, то эта операция определена и для всего кортежа.
+
+Кроме того, если $x$ --- значение--кортеж, то можно получить значения отдельных элементов этого кортежа. А именно, для получения значения элемента с номером $i$ (элементы кортежа нумеруются слева направо, и нумерация начинается с нуля), нужно написать $x\texttt{\#}i$.
+
+        \subsubsection{Указатели}
+Указатели содержат адреса ячеек памяти. Тип--указатель определяется так:
+\begin{center}
+\noindent\textcolor{Green}{\syntax{\textcolor{Black}{@}\synt{простейшее_определение_типа} }}
+\end{center}
+
+Указателю можно присвоить константу \textbf{ничего}. В этом случае указатель перестаёт указывать на какую бы то ни было ячейку памяти. Указатель можно разыменовывать, то есть
+получать значение переменной, на которую он указывает. Для разыменования указателя нужно после имени указателя поставить знак \texttt{@}. Разыменовывать можно все указатели,
+кроме указателей типа \texttt{@}\textbf{ничего}. Тип переменной, на которую указывает указатель, называется базовым типом указателя.
+
+Указатели можно сравнивать на равенство и неравенство. 
+
+Указателю типа \texttt{@}\textbf{ничто} можно присваивать значение указателя любого типа.
+
+\begin{Example}\\
+\rm
+\textbf{перем} \texttt{x : }\textbf{N};\\
+\hspace*{12mm}\texttt{y : @}\textbf{N}\\
+\hspace*{12mm}\dots\\
+\hspace*{12mm}x := @y + 1;\\
+\hspace*{12mm}\dots
+\end{Example}
+
+        \subsubsection{Ссылки}
+Тип--ссылка выглядит так:        
+\begin{center}
+\noindent\textcolor{Green}{\syntax{(\textcolor{Black}{\textbf{ссылочка}}|\textcolor{Black}{\textbf{пост ссылочка}})\synt{простейшее_определение_типа}}}
+\end{center}
+        
+        \subsubsection{Типы указателей на функции}
+
+Переменные таких типов предназначены для хранения указателей на функции. Тип указателя на функцию выглядит так:
+\begin{center}
+\noindent\textcolor{Green}{\textcolor{Black}{\textbf{функция}} \synt{сигнатура} }
+\end{center}
+
+Здесь \textcolor{Green}{\syntax{\synt{сигнатура}}} определяется следующими формулами в РБНФ:
+
+\textcolor{Green}{\syntax{%
+%
+\synt{сигнатура}$\to$\textcolor{Black}{(}[\synt{группа_параметров}\{\textcolor{Black}{;}\synt{группа_параметров}\}]\textcolor{Black}{):}\synt{тип_значения}\\
+%
+\indent\synt{группа_параметров}$\to$\synt{имя_параметра}\{\textcolor{Black}{,}\synt{имя_параметра}\}\textcolor{Black}{:}\synt{тип_параметра}\\
+%
+\indent\synt{имя_параметра}$\to$\synt{идентификатор}\\
+}}
+
+        \subsubsection{Массивы}
+Тип--массив имеет следующий вид:
+\begin{center}
+\noindent\textcolor{Green}{\syntax{\textcolor{Black}{\textbf{массив}}\textcolor{Black}{[} [\synt{выражение}]\{\textcolor{Black}{,}[\synt{выражение}]\} \textcolor{Black}{]}%
+\synt{простейшее_определение_типа} }}
+\end{center}
+
+
+Если какое--либо из выражений опущено, то по этому измерению массив считается динамическим. Каждое из выражений указывает, сколько значений может принимать соответствующий
+индекс массива. Каждое выражение должно быть таким, чтобы его можно было вычислить на этапе компиляции. Наименьшее значение каждого индекса равно нулю, а массивы хранятся по
+строкам.
+
+При этом записи
+\begin{center}
+\textbf{массив}[\texttt{N}$_0$,\dots,\texttt{N}$_{m-1}$] \textbf{массив}[\texttt{N}$_{m}$,\dots,\texttt{N}$_{m+p-1}$] \texttt{T}
+\end{center}
+и
+\begin{center}
+\textbf{массив}[\texttt{N}$_0$,\dots,\texttt{N}$_{m-1}$,\texttt{N}$_{m}$,\dots,\texttt{N}$_{m+p-1}$] \texttt{T}
+\end{center}
+считаются эквивалентными.
+
+Далее, если тип \texttt{T} определён как
+\begin{center}
+\textbf{массив}[\texttt{N}$_{m}$,\dots,\texttt{N}$_{m+p-1}$] \texttt{T}$'$
+\end{center}
+то запись
+\begin{center}
+\textbf{массив}[\texttt{N}$_0$,\dots,\texttt{N}$_{m-1}$] \texttt{T}
+\end{center}
+считается эквивалентной записи
+\begin{center}
+\textbf{массив}[\texttt{N}$_0$,\dots,\texttt{N}$_{m-1}$,\texttt{N}$_{m}$,\dots,\texttt{N}$_{m+p-1}$] \texttt{T}$'$
+\end{center}
+
+Кроме того, любой тип вида
+\begin{center}
+\textbf{массив}[\texttt{N}$_0$,\dots,\texttt{N}$_{m-1}$] \texttt{T}
+\end{center}
+где тип \texttt{T} эквивалентен типу \textbf{ничего}, сам эквивалентен типу \textbf{ничего}.
+
+Все эти преобразования производятся на этапе компиляции.
+
+\begin{Example} \textit{Пусть сделаны определения}\\
+\rm
+\textbf{конст} \texttt{N} : \textbf{целN} = 128\\
+\textbf{тип}\hspace*{5mm}\texttt{float} = \textbf{мал вещR};\\
+\hspace*{12mm}\texttt{T} = \textbf{массив}\texttt{[целN] float}
+
+\textit{Тогда следующие записи эквивалентны:}
+\begin{enumerate}
+    \item
+\textbf{массив}\texttt{[N, N]float}
+    \item
+\textbf{массив}\texttt{[N]} \textbf{массив}\texttt{[N] float}
+    \item
+\textbf{массив}\texttt{[N] T}
+\end{enumerate}
+\end{Example}
+
+Для обращения к элементу массива надо после имени массива в квадратных скобках перечислить индексы нужного элемента.
+
+\begin{Example} \textit{Пусть сделаны определения}\\
+\rm
+\textbf{пост} \texttt{N} : \textbf{целN} = 128;\\
+\hspace*{10mm} \texttt{M} : \textbf{целN} = 256\\
+\\
+\textbf{тип}\hspace*{5mm}\texttt{float} = \textbf{мал вещR};\\
+\hspace*{12mm}\texttt{T1} = \textbf{массив}\texttt{[M] float};\\
+\hspace*{12mm}\texttt{T2} = \textbf{массив}\texttt{[N] T1}\\
+\\
+\textbf{перем} \texttt{A} : \texttt{T1};\\
+\hspace*{11mm} \texttt{B} : \texttt{T2}
+\\
+\textit{Тогда к элементу массива \texttt{A} с индексом 200 нужно обращаться как \texttt{A[200]}, а к имеющему индекс 107 элементу массива \texttt{B} --- \texttt{B[107]}.
+Поскольку, в силу сделанных определений, элемент \texttt{B[107]} сам является массивом, то для обращения к имеющему индекс 91 элементу массива \texttt{B[107]} нужно писать
+\texttt{B[107][91]}. Последняя запись эквивалентна записи \texttt{B[107, 91]}. Аналогичные правила действуют и для массивов большей размерности.}
+\end{Example}
+
+Тип элемента массива называется базовым типом массива.
+
+Для массивов определена инфиксная бинарная операция \texttt{\#}, первым (левым) операндом которой служит имя массива, а вторым (правым) --- номер индекса массива, считая слева.
+Самый левый индекс имеет номер ноль. В результате вычисления данной операции будет получено количество возможных значений указанного вторым операндом индекса. Так происходит,
+если второй аргумент неотрицателен и меньше количества индексов (с учётом преобразований этапа компиляции). Если же второй аргумент операции \texttt{\#} либо отрицателен, либо
+не меньше количества индексов массива, то результат будет равен нулю.
+
+\begin{Example} \textit{Пусть сделаны определения}\\
+\rm
+\textbf{перем} \texttt{A} : \textbf{массив}\texttt{[16]}\textbf{вещR};\\
+\hspace*{11mm} \texttt{B} : \textbf{массив}\texttt{[9, 11]}\textbf{вещR};\\
+\hspace*{11mm} \texttt{С} : \textbf{массив}\texttt{[17, 8, 19]}\textbf{вещR}\\
+\\
+\textit{Тогда $\texttt{A\#}0=16$, $\texttt{A\#}(-3)=0$, $\texttt{B\#}0=9$, $\texttt{B\#}(-5)=0$, $\texttt{B\#}1=11$, $\texttt{B\#}2=0$, $\texttt{B\#}1000=0$,
+$\texttt{A\#}1=0$, $\texttt{B[3]\#}0=11$, $\texttt{C\#}0=17$, $\texttt{C\#}1=8$, $\texttt{C\#}2=19$, $\texttt{C[5]\#}0=8$, $\texttt{C[5]\#}1=19$, $\texttt{C[5,4]\#}0=19$.}
+\end{Example}
+
+        \subsubsection{Алгебраические типы данных}
+Определение алгебраического типа данных имеет следующий вид:
+
+\textcolor{Green}{\syntax{%
+%
+\synt{опр_алгебр_типа}$\to$\synt{компонента}\{\textcolor{Black}{\texttt{.|.}}\synt{компонента}\}\\
+%
+\indent\synt{компонента}$\to$\synt{опр_структ}|\synt{опр_перечисления}\\
+%
+\indent\synt{опр_структ}$\to$\textcolor{Black}{\textbf{структ}} \synt{имя_структ} \textcolor{Black}{\{}\synt{тело_структ}\textcolor{Black}{\}}\\
+%
+\indent\synt{опр_перечисления}$\to$\textcolor{Black}{\textbf{перечисление}} \synt{имя_перечисления} \textcolor{Black}{\{}\synt{тело_перечисления}\textcolor{Black}{\}}\\
+%
+\indent\synt{тело_структ}$\to$[\synt{группа_полей}\{\textcolor{Black}{;}\synt{группа_полей}\}]\\
+%
+\indent\synt{группа_полей}$\to$\synt{имя_поля}\{,\synt{имя_поля}\}\textcolor{Black}{:}\synt{тип_поля}\\
+%
+\indent\synt{тело_перечисления}$\to$\synt{имя_значения}\{,\synt{имя_значения}\}
+}}
+
+    \subsection{Описание переменных}  
+Синтаксис описания переменных:
+
+\textcolor{Green}{%
+\syntax{%
+\synt{описание_переменных}$\to$\textcolor{Black}{\textbf{перем}} \synt{группа_переменных} \textcolor{Black}{:} \synt{простейшее_определение_типа}\\
+\{\textcolor{Black}{;}\synt{группа_переменных} \textcolor{Black}{:} \synt{простейшее_определение_типа}\}\\
+%
+\indent\synt{группа_переменных}$\to$\synt{переменная}\{\textcolor{Black}{,} \synt{переменная}\}\\
+%
+\indent\synt{переменная}$\to$\synt{имя_переменной}\\
+%
+\indent\synt{имя_переменной}$\to$\synt{идентификатор}
+}}
+
+Необязательная звёздочка после имени переменной означает, что переменная доступна из других модулей. Отсутствие звёздочки означает недоступность переменной из других модулей.
+
+    \subsection{Описание констант}
+Синтаксис описания констант:
+
+\textcolor{Green}{%
+\syntax{%
+\synt{описание_констант}$\to$\\
+\textcolor{Black}{\textbf{пост}} \synt{имя_константы} \textcolor{Black}{:} \synt{простейшее_определение_типа} \textcolor{Black}{\texttt{=}} %
+\synt{значение_константы}\\
+\{\textcolor{Black}{;}\synt{имя_константы}\textcolor{Black}{:} \synt{простейшее_определение_типа} \textcolor{Black}{\texttt{=}} %
+\synt{значение_константы}\}\\
+%
+\indent\synt{значение_константы}$\to$\synt{выражение}|%
+\textcolor{Black}{\texttt{[}}\synt{значение_константы}\{\textcolor{Black}{,} \synt{значение_константы}\}\textcolor{Black}{\texttt{]}}\\
+%
+\indent\synt{имя_константы}$\to$\synt{идентификатор}
+}}
+
+    \subsection{Описание функций}
+Описание алгоритма имеет следующую структуру:
+
+\textcolor{Green}{%
+\syntax{%
+\synt{описание_функции}$\to$[\textcolor{Black}{\textbf{шапка}}|\textcolor{Black}{\textbf{чистая}}] \textcolor{Black}{\textbf{фун}} \synt{имя_функции} %
+\synt{сигнатура}\text{(}\synt{реализация}|\textcolor{Black}{;})
+\\
+\indent\synt{реализация}$\to$\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}}\\
+%
+\indent\synt{операторы}$\to$\synt{оператор}\{\textcolor{Black}{;} \synt{оператор}\}\\
+%
+\indent\synt{имя_функции}$\to$\synt{идентификатор}
+}}
+
+
+Необязательное ключевое слово \textbf{шапка} означает, что выполнение модуля начинается с этой функции. Функций с атрибутом \textbf{шапка} в модуле может быть не более одной.
+    
+Необязательное ключевое слово \textbf{чистая} означает, что функция не имеет побочных эффектов.   
+   
+\section{Выражения}
+
+Синтаксис выражений с помощью РБНФ можно записать так:
+
+\textcolor{Green}{\syntax{\\
+\indent\synt{выражение}$\to$\synt{выражение}$_0$[\synt{операция_присваивания} \synt{выражение}]\\
+%
+\indent\synt{выражение}$_0\to$\synt{выражение}$_1$[(\textcolor{Black}{\texttt{?}}|\textcolor{Black}{\texttt{?.}})\synt{выражение}$_1$ \textcolor{Black}{\texttt{:}} \synt{выражение}$_1$]\\
+%
+\indent\synt{выражение}$_1$$\to$\synt{выражение}$_2$\{%
+(\textcolor{Black}{\texttt{||}}|\textcolor{Black}{\texttt{||.}}|\textcolor{Black}{\texttt{!||}}|\textcolor{Black}{\texttt{!||.}}|\textcolor{Black}{\texttt{\^{ }\^{ }}})%
+\synt{выражение}$_2$\}\\
+%
+\indent\synt{выражение}$_2$$\to$\synt{выражение}$_3$\{%
+(\textcolor{Black}{\texttt{\&\&}}|\textcolor{Black}{\texttt{\&\&.}}|\textcolor{Black}{\texttt{!\&\&}}|\textcolor{Black}{\texttt{!\&\&.}})\synt{выражение}$_3$\}\\
+%
+\indent\synt{выражение}$_3$$\to$\{\textcolor{Black}{\texttt{!}}\}\synt{выражение}$_4$\\
+%
+\indent\synt{выражение}$_4$$\to$\synt{выражение}$_5$\{%
+(\textcolor{Black}{\texttt{<}}|\textcolor{Black}{\texttt{>}}|\textcolor{Black}{\texttt{<=}}|\textcolor{Black}{\texttt{>=}}|\textcolor{Black}{\texttt{==}}|%
+\textcolor{Black}{\texttt{!=}})\synt{выражение}$_5$\}\\
+%
+\indent\synt{выражение}$_5$$\to$\synt{выражение}$_6$\{%
+(\textcolor{Black}{\texttt{|}}|\textcolor{Black}{\texttt{\~{ }|}}|\textcolor{Black}{\texttt{\^{ }}})\synt{выражение}$_6$\}\\
+%
+\indent\synt{выражение}$_6$$\to$\synt{выражение}$_7$\{%
+(\textcolor{Black}{\texttt{\&}}|\textcolor{Black}{\texttt{\~{ }\&}}|\textcolor{Black}{\texttt{<{}<}}|\textcolor{Black}{\texttt{>{}>}})\synt{выражение}$_76$\}\\
+%
+\indent\synt{выражение}$_7$$\to$\{\textcolor{Black}{\texttt{\~{ }}}\}\synt{выражение}$_8$\\
+%
+\indent\synt{выражение}$_8$$\to$\synt{выражение}$_9$\{%
+(\textcolor{Black}{\texttt{+}}|\textcolor{Black}{\texttt{+.}}|\textcolor{Black}{\texttt{-}}|\textcolor{Black}{\texttt{-.}})\synt{выражение}$_9$\}\\
+%
+\indent\synt{выражение}$_9$$\to$\synt{выражение}$_{10}$\{%
+(\textcolor{Black}{\texttt{*}}|\textcolor{Black}{\texttt{*.}}|\textcolor{Black}{\texttt{/}}|\textcolor{Black}{\texttt{/.}}|\textcolor{Black}{\texttt{\%}}|%
+\textcolor{Black}{\texttt{\%.}})\synt{выражение}$_{10}$\}\\
+%
+\indent\synt{выражение}$_{10}$$\to$\synt{выражение}$_{11}$[%
+(\textcolor{Black}{\texttt{**}}|\textcolor{Black}{\texttt{**.}})\synt{выражение}$_{10}$]\\
+%
+\indent\synt{выражение}$_{11}$$\to$\synt{выражение}$_{12}$[\textcolor{Black}{\texttt{\#}}\synt{выражение}$_{12}$]\\
+%
+\indent\synt{выражение}$_{12}$$\to$\{%
+(\textcolor{Black}{\texttt{+{}+}}|\textcolor{Black}{\texttt{-{}-}}|\textcolor{Black}{\texttt{+{}+<}}|\textcolor{Black}{\texttt{-{}-<}})\}\synt{выражение}$_{13}$\\
+%
+\indent\synt{выражение}$_{13}$$\to$[\textcolor{Black}{\texttt{\#}}]\synt{выражение}$_{14}$\\
+%
+\indent\synt{выражение}$_{14}$$\to$[%
+(\textcolor{Black}{\texttt{+}}|\textcolor{Black}{\texttt{-}})]\synt{выражение}$_{15}$\\
+%
+\indent\synt{выражение}$_{15}$$\to$[\textcolor{Black}{\texttt{@}}|\textcolor{Black}{\texttt{@@}}|\textcolor{Black}{\texttt{\#\#}}|%
+\textcolor{Black}{\texttt{\#\#\#}}]\synt{выражение}$_{16}$\\
+%
+\indent\synt{выражение}$_{16}$$\to$%
+(\textcolor{Black}{\textbf{выдел}}|\textcolor{Black}{\textbf{очистить}})%\\
+\textcolor{Black}{\texttt{(}}\synt{имя}\{\textcolor{Black}{\texttt{,}}\synt{выражение}\}\textcolor{Black}{\texttt{)}}|\synt{литёра}|\synt{строчка}|\synt{целое}|\\
+\synt{вещественное}|\synt{комплексное}|\textcolor{Black}{\textbf{правда}}|\textcolor{Black}{\textbf{неправда}}|\textcolor{Black}{\textbf{ничего}}|\synt{имя}|%
+\textcolor{Black}{\texttt{(}}\synt{выражение}\textcolor{Black}{\texttt{)}}\\
+%
+\indent\synt{имя_модуля}$\to$\synt{идентификатор}\\
+%
+\indent\synt{имя}$\to$%
+\synt{идентификатор}\{\textcolor{Black}{\texttt{.}}\synt{идентификатор}|\textcolor{Black}{\texttt{@}}|%
+\textcolor{Black}{\texttt{[}}\synt{выражение}\{\textcolor{Black}{\texttt{,}}\synt{выражение}\}\textcolor{Black}{\texttt{]}}|\\
+\textcolor{Black}{\texttt{(}}[\synt{выражение}\{\textcolor{Black}{\texttt{,}}\synt{выражение}\}]\textcolor{Black}{\texttt{)}}\}
+}}
+   
+\section{Операторы}
+
+    \subsection{Операторы присваивания}
+
+Синтаксис оператора присваивания:
+\begin{center}
+\textcolor{Green}{\syntax{\synt{имя}%
+(\textcolor{Black}{\texttt{=}}|\textcolor{Black}{\texttt{:=}}|\textcolor{Black}{\texttt{||=}}|\textcolor{Black}{\texttt{||.=}}|\textcolor{Black}{\texttt{!||=}}|%
+\textcolor{Black}{\texttt{!||.=}}|\textcolor{Black}{\texttt{\&\&=}}|\textcolor{Black}{\texttt{\&\&.=}}|\textcolor{Black}{\texttt{!\&\&=}}|%
+\textcolor{Black}{\texttt{!\&\&.=}}|\textcolor{Black}{\texttt{\^{ }\^{ }=}}|\textcolor{Black}{\texttt{|=}}|\textcolor{Black}{\texttt{\&=}}|%
+\textcolor{Black}{\texttt{\~{ }|=}}|\textcolor{Black}{\texttt{\~{ }\&=}}|\textcolor{Black}{\texttt{\^{ }=}}|\\
+\textcolor{Black}{\texttt{<{}<=}}|\textcolor{Black}{\texttt{>{}>=}}|\textcolor{Black}{\texttt{+=}}|\textcolor{Black}{\texttt{-=}}|\textcolor{Black}{\texttt{*=}}|%
+\textcolor{Black}{\texttt{/=}}|\textcolor{Black}{\texttt{\%=}}|\textcolor{Black}{\texttt{**=}}|%
+\textcolor{Black}{\texttt{+.=}}|\textcolor{Black}{\texttt{-.=}}|\textcolor{Black}{\texttt{*.=}}|%
+\textcolor{Black}{\texttt{/.=}}|\textcolor{Black}{\texttt{\%.=}}|\textcolor{Black}{\texttt{**.=}})\synt{выражение} }}
+\end{center}
+
+Все эти операторы можно разделить на три группы: простой оператор присваивания (\texttt{=}), оператор копирования (\texttt{:=}) и все прочие операторы присваивания.
+Отличие оператора копирования от оператора присваивания состоит в поведении для динамических массивов: в этом случае оператор присваивания копирует
+ссылки на значения (точнее, служебные сведения, в которые входят эти ссылки), а оператор копирования копирует сами значения. 
+
+
+    \subsection{Условный оператор}
+Синтаксис условного оператора:
+
+\noindent\textcolor{Green}{\syntax{%
+\noindent\textcolor{Black}{\textbf{если}}\textcolor{Black}{\texttt{(}}\synt{условие}\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{то}}%\\
+\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}}\\
+\{\textcolor{Black}{\textbf{инес}}\textcolor{Black}{\texttt{(}}\synt{условие}\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{то}}%\\
+\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}}\}\\
+\text{[}\textcolor{Black}{\textbf{иначе}}\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}}]%
+}}
+
+Здесь \textcolor{Green}{\syntax{\synt{условие}}} --- это логическое выражение, а
+\textcolor{Green}{\syntax{\textcolor{Black}{\textbf{инес}}\textcolor{Black}{\texttt{(}}\synt{условие}\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{то}}%\\
+\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} }} является сокращённой формой для
+\textcolor{Green}{\syntax{\textcolor{Black}{\textbf{иначе}}\textcolor{Black}{\texttt{\{}} \textcolor{Black}{\textbf{если}}\textcolor{Black}{\texttt{(}}\synt{условие}%
+\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{то}}%\\
+\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} \textcolor{Black}{\texttt{\}}}%
+}}.
+
+    \subsection{Оператор выбора}
+
+Синтаксис оператора выбора:
+
+\textcolor{Green}{\syntax{%
+\synt{оператор_выбора}$\to$\textcolor{Black}{\textbf{выбор}}\textcolor{Black}{\texttt{(}}\synt{S}\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{из}}%
+\textcolor{Black}{\texttt{\{}}\\
+\synt{список_значений_для_ветви} \textcolor{Black}{\texttt{:}} \textcolor{Black}{\texttt{\{}}\synt{ветвь}\textcolor{Black}{\texttt{\}}}\\
+\{\synt{список_значений_для_ветви} \textcolor{Black}{\texttt{:}} \textcolor{Black}{\texttt{\{}}\synt{ветвь}\textcolor{Black}{\texttt{\}}}\}\\
+\text{[}\textcolor{Black}{\textbf{иначе}}\textcolor{Black}{\texttt{\{}}\synt{ветвь_иначе}\textcolor{Black}{\texttt{\}}}]\textcolor{Black}{\texttt{\}}}\\
+%
+\indent\synt{список_значений_для_ветви}$\to$\synt{значение_для_ветви}\{\textcolor{Black}{\texttt{,}} \synt{значение_для_ветви}\}\\
+%
+\indent\synt{значение_для_ветви}$\to$\synt{выражение}[\textcolor{Black}{\texttt{..}}\synt{выражение}]\\
+%
+\indent\synt{ветвь}$\to$\{\synt{описание}|\synt{операторы}\}\\
+%
+\indent\synt{ветвь_иначе}$\to$\{\synt{описание}|\synt{операторы}\}\\
+%
+\indent\synt{S}$\to$\synt{выражение}
+}}
+
+Оператор выбора определяет выбор и выполнение операторов на основе значения выражения \textcolor{Green}{\syntax{\synt{S}}}, которое должно быть выражением
+целочисленного, перечислимого, или символьного типа.
+
+Оператор выполняется так. Сначала вычисляется \textcolor{Green}{\syntax{\synt{S}}}, а затем выполняется та ветвь (т.е. последовательность операторов),
+соответствующий которой список значений содержит значение выражения \textcolor{Green}{\syntax{\synt{S}}}. При этом можно указывать диапазоны значений,
+а именно, следующим образом: \texttt{A..B}, где \texttt{A} --- минимальное значение в диапазоне, \texttt{B} --- максимальное значение в диапазоне. Например,
+\texttt{1..2000}, \texttt{-7..7}. Значения в списках значений должны быть константами, которые можно вычислить на этапе компиляции, и ни одно значение не должно употребляться
+более одного раза. Если значения выражения \textcolor{Green}{\syntax{\synt{S}}} нет в списке значений ни для какой ветви, то выполняются операторы
+\textcolor{Green}{\syntax{\synt{ветвь_иначе}}}, если ключевое слово \textbf{иначе} присутствует. Если же ключевого слова \textbf{иначе} нет, то выполнение оператора выбора
+завершается.
+
+    \subsection{Оператор разбора значения алгебраического типа}
+Синтаксис оператора разбора:
+
+\textcolor{Green}{\syntax{%
+\synt{оператор_разбора}$\to$\textcolor{Black}{\textbf{разбор}}\textcolor{Black}{\texttt{(}}\synt{S}\textcolor{Black}{\texttt{)}}%
+\textcolor{Black}{\texttt{\{}}\\
+\synt{метка_разбора} \textcolor{Black}{\texttt{->}} \textcolor{Black}{\texttt{\{}}\synt{ветвь}\textcolor{Black}{\texttt{\}}}\\
+\{\synt{метка_разбора} \textcolor{Black}{\texttt{->}} \textcolor{Black}{\texttt{\{}}\synt{ветвь}\textcolor{Black}{\texttt{\}}}\}\\
+\text{[}\textcolor{Black}{\textbf{иначе}}\textcolor{Black}{\texttt{\{}}\synt{ветвь_иначе}\textcolor{Black}{\texttt{\}}}]\textcolor{Black}{\texttt{\}}}\\
+%
+\indent\synt{метка_разбора}$\to$\{\textcolor{Black}{ид}\textcolor{Black}{::}\}\textcolor{Black}{ид}\textcolor{Black}{\{..\}}\\
+%
+\indent\synt{ветвь}$\to$\{\synt{описание}|\synt{операторы}\}\\
+%
+\indent\synt{ветвь_иначе}$\to$\{\synt{описание}|\synt{операторы}\}\\
+%
+\indent\synt{S}$\to$\synt{выражение}
+}}
+
+    \subsection{Операторы цикла}
+Операторы цикла организуют выполнение повторяющихся действий. Всего в языке есть четыре типа операторов цикла: оператор цикла с предусловием (оператор \textbf{\glqq пока\grqq}),
+оператор цикла с постусловием (оператор \textbf{\glqq повтор\dots пока\grqq}), оператор \textbf{\glqq бесконечно повтор\grqq}, оператор \textbf{\glqq для\grqq}. Опишем каждый из этих операторов.
+        \subsubsection{Оператор цикла с предусловием}
+Оператор цикла с предусловием выглядит так:
+\begin{center}
+\textcolor{Green}{\syntax{[\textcolor{Black}{\texttt{+|}}\synt{имя_цикла}\textcolor{Black}{\texttt{:}}]\textcolor{Black}{\textbf{пока}}\textcolor{Black}{\texttt{(}}\synt{условие}%
+\textcolor{Black}{\texttt{)}}\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} }}
+\end{center}
+Здесь \textcolor{Green}{\syntax{\synt{условие}}} --- это логическое выражение, а  \textcolor{Green}{\syntax{\synt{имя_цикла}}} --- идентификатор, являющийся именем цикла.
+Данный идентификатор можно использовать только в операторе выхода из цикла. Оператор \textbf{\glqq пока\grqq}\ выполняет тело цикла, пока логическое выражение
+\textcolor{Green}{\syntax{\synt{условие}}} остаётся истинным. Истинность этого логического выражения проверяется перед каждым выполнением тела цикла (т.е.
+операторов \textcolor{Green}{\syntax{\synt{операторы}}}).
+        \subsubsection{Оператор цикла с постусловием}
+Оператор цикла с постусловием выглядит так:
+\begin{center}
+\textcolor{Green}{\syntax{[\textcolor{Black}{\texttt{+|}}\synt{имя_цикла}\textcolor{Black}{\texttt{:}}]%
+\textcolor{Black}{\textbf{повторяй}}\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}}%
+\textcolor{Black}{\textbf{покуда}}\textcolor{Black}{\texttt{(}}\synt{условие}\textcolor{Black}{\texttt{)}} }}
+\end{center}
+Здесь \textcolor{Green}{\syntax{\synt{условие}}} --- это логическое выражение, а  \textcolor{Green}{\syntax{\synt{имя_цикла}}} --- идентификатор, являющийся именем цикла.
+Данный идентификатор можно использовать только в операторе выхода из цикла. Оператор цикла \textbf{\glqq повторяй\dots пока\grqq}\ выполняет тело цикла, пока логическое
+выражение \textcolor{Green}{\syntax{\synt{условие}}} остаётся истинным. Истинность этого логического выражения проверяется после каждого выполнения тела цикла (т.е.
+операторов \textcolor{Green}{\syntax{\synt{операторы}}}).
+        \subsubsection{Оператор цикла \glqq бесконечно повторяй\grqq}
+Оператор \textbf{\glqq повторяй\dots бесконечно\grqq} выглядит так:
+\begin{center}
+\textcolor{Green}{\syntax{[\textcolor{Black}{\texttt{+|}}\synt{имя_цикла}\textcolor{Black}{\texttt{:}}]%
+\textcolor{Black}{\textbf{бесконечно}} \textcolor{Black}{\textbf{повторяй}}\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} }}
+\end{center}
+Здесь \textcolor{Green}{\syntax{\synt{имя_цикла}}} --- идентификатор, являющийся именем цикла. Данный идентификатор можно использовать только в операторе выхода из цикла.
+Оператор \textbf{\glqq вечно повторяй\grqq} выполняется до тех пор, пока из него не будет совершён явный выход --- либо с помощью оператора выхода из цикла, либо с
+помощью оператора возврата из подпрограммы.
+    
+    
+
+        \subsubsection{Оператор цикла \glqq для\grqq}
+Оператор цикла \textbf{\glqq для\grqq}\ выглядит так:
+\begin{center}
+\textcolor{Green}{\syntax{[\textcolor{Black}{\texttt{+|}}\synt{имя_цикла}\textcolor{Black}{\texttt{:}}]%
+\textcolor{Black}{\textbf{для}} \synt{v} \textcolor{Black}{\texttt{=}} \textcolor{Black}{\texttt{нач_знач}, }\textcolor{Black}{\texttt{кон_зн}}%
+[\textcolor{Black}{\texttt{, шаг}}] \textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} }}
+\end{center}
+
+Здесь \textcolor{Green}{\syntax{\synt{v}}} --- идентификатор, являющийся именем переменной цикла; \texttt{нач_знач} --- начальное значение переменной цикла;
+\texttt{кон_знач} --- конечное значение переменной цикла; \texttt{шаг} --- шаг цикла. По умолчанию шаг равен единице. Величины \texttt{нач_знач}, \texttt{кон_знач} и
+\texttt{шаг} являются выражениями, вычисляемыми до начала цикла. Переменная цикла должна быть символьного, целочисленного или перечислимого типа. Выражения \texttt{нач_знач} и
+\texttt{кон_знач} должны иметь тип, совместимый с типом переменной \textcolor{Green}{\syntax{\synt{v}}}, а выражение \texttt{шаг} должно быть целочисленного типа.
+Менять в теле цикла значение переменной цикла нельзя.
+
+Смысл оператора цикла \textbf{\glqq для\grqq}:
+
+\noindent\textcolor{Green}{\syntax{%
+\textcolor{Black}{t$_1$} \textcolor{Black}{\texttt{:=}} \textcolor{Black}{\texttt{нач_знач};}\\
+\textcolor{Black}{t$_2$} \textcolor{Black}{\texttt{:=}} \textcolor{Black}{\texttt{кон_знач};}\\
+\textcolor{Black}{t$_3$} \textcolor{Black}{\texttt{:=}} \textcolor{Black}{\texttt{шаг};}\\
+\textcolor{Black}{\textbf{если}}\textcolor{Black}{\texttt{(}}\textcolor{Black}{t$_3$} \textcolor{Black}{\texttt{>}} \textcolor{Black}{0}\textcolor{Black}{\texttt{)}}%
+\textcolor{Black}{\textbf{то}}\\
+\textcolor{Black}{\texttt{\{}}\\
+\phantom{конец}\synt{v} \textcolor{Black}{\texttt{:=}} \textcolor{Black}{t$_1$}\textcolor{Black}{;}\\
+\phantom{конец}\textcolor{Black}{\textbf{пока}}\textcolor{Black}{\texttt{(}}\synt{v} \textcolor{Black}{\texttt{<=}} \textcolor{Black}{t$_2$}\textcolor{Black}{\texttt{)}}\\
+\phantom{конец}\textcolor{Black}{\texttt{\{}}\\
+\phantom{конецмоимс}\{\synt{описание}|\synt{операторы}\}\\
+\phantom{конецмоимс}\textcolor{Black}{\texttt{увелич}}\textcolor{Black}{\texttt{(}}\synt{v}\textcolor{Black}{\texttt{,}} \textcolor{Black}{t$_3$}\textcolor{Black}{\texttt{)}}\\
+\phantom{конец}\textcolor{Black}{\texttt{\}}}\\
+\textcolor{Black}{\texttt{\}}}\\
+\textcolor{Black}{\textbf{инес}}\textcolor{Black}{\texttt{(}}\textcolor{Black}{t$_3$} \textcolor{Black}{\texttt{<}} \textcolor{Black}{0}\textcolor{Black}{\texttt{)}}%
+\textcolor{Black}{\textbf{то}}\\
+\textcolor{Black}{\texttt{\{}}\\
+\phantom{конец}\synt{v} \textcolor{Black}{\texttt{:=}} \textcolor{Black}{t$_1$}\textcolor{Black}{;}\\
+\phantom{конец}\textcolor{Black}{\textbf{пока}}\textcolor{Black}{\texttt{(}}\synt{v} \textcolor{Black}{\texttt{>=}} \textcolor{Black}{t$_2$}\textcolor{Black}{\texttt{)}}\\
+\phantom{конец}\textcolor{Black}{\texttt{\{}}\\
+\phantom{конецмоимс}\{\synt{описание}|\synt{операторы}\}\\
+\phantom{конецмоимс}\textcolor{Black}{\texttt{увелич}}\textcolor{Black}{\texttt{(}}\synt{v}\textcolor{Black}{\texttt{,}} \textcolor{Black}{t$_3$}\textcolor{Black}{\texttt{)}}\\
+\phantom{конец}\textcolor{Black}{\texttt{\}}}\\
+\textcolor{Black}{\texttt{\}}}\\
+\textcolor{Black}{\textbf{иначе}}\\
+\textcolor{Black}{\texttt{\{}}\\
+\phantom{конец}\synt{v} \textcolor{Black}{\texttt{:=}} \textcolor{Black}{t$_1$}\textcolor{Black}{;}\\
+\phantom{конец}\{\synt{описание}|\synt{операторы}\}\\
+\phantom{конец}\textcolor{Black}{\textbf{пока}}\textcolor{Black}{\texttt{(}}\textcolor{Black}{t$_1$} \textcolor{Black}{\texttt{!=}} \textcolor{Black}{t$_2$}%
+\textcolor{Black}{\texttt{)}}\\
+\phantom{конец}\textcolor{Black}{\texttt{\{}}\\
+\phantom{конецмоимс}\{\synt{описание}|\synt{операторы}\}\\
+\phantom{конец}\textcolor{Black}{\texttt{\}}}\\
+\textcolor{Black}{\texttt{\}}}\\
+\textcolor{Black}{\texttt{\}}}
+}}
+
+    \subsection{Оператор выхода из цикла}
+
+Синтаксис оператора выхода из цикла:
+\begin{center}
+\textcolor{Green}{\syntax{\textcolor{Black}{\textbf{выход}} [\textcolor{Black}{\textbf{из}} \synt{имя_цикла}]}}
+\end{center}
+Этот оператор совершает выход из с цикла с именем \textcolor{Green}{\syntax{\synt{имя_цикла}}}, если оно указано. Если же нет, то производится выход из текущего цикла.
+
+    \subsection{Оператор возврата из функции}
+Оператор возврата из подпрограммы совершает выход из функции. Если тип возвращаемого функцией значения --- тип \textbf{ничего}, то выход из подпрограммы выполняется
+с помощью оператора возврата, имеющего вид \textbf{вернуть}. Если же тип возвращаемого функцией значения не эквивалентен типу \textbf{ничего}, то возврат выполняется
+с помощью оператора возврата, имеющего вид \textbf{вернуть} \textcolor{Green}{\syntax{\synt{выражение}}}, причём тип выражения должен быть совместим с типом
+возвращаемого функцией значения.
+         
+\chapter{Стандартная библиотека}
+    \section{Математические функции}
+    \section{Ввод-вывод}
+
+\end{document}
