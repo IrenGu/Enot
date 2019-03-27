@@ -283,13 +283,33 @@
 
 бесконечно
 
+R
+
+R32
+
+R64
+
+R80
+
+R128
+
 вернуть
+
+вкл
+
+время
+
+вход
+
+выкл
 
 выбор
 
 выдел
 
 выход
+
+шапка
 
 для
 
@@ -300,6 +320,10 @@
 инес
 
 правда
+
+подсчет
+
+рандом
 
 IC
 
@@ -331,6 +355,10 @@ IC128
 
 мод
 
+max
+
+min
+
 ничего
 
 очищение
@@ -347,16 +375,6 @@ IC128
 
 разбор
 
-R
-
-R32
-
-R64
-
-R80
-
-R128
-
 символ
 
 строчка
@@ -369,7 +387,11 @@ R128
 
 то
 
+удали
+
 фун
+
+чистая
 
 целN
 
@@ -382,10 +404,6 @@ R128
 целN64
 
 целN128
-
-чистая
-
-шапка
 \end{multicols}
 
 Примеры идентификаторов: \texttt{котенок}, \texttt{Гав}, \texttt{_s1994}, \texttt{Кощей_Бессмертный}, \texttt{Черепашка}.    
@@ -580,7 +598,7 @@ R128
 \end{verbatim}
 
     \section{Структура программы}
-Структура программы на языке Енот выглядит так:
+Структура программы на языке Рысь выглядит так:
 
 \syntax{\noindent\textbf{модуль} \textcolor{Green}{\synt{имя_модуля}}\\
 \{\\
@@ -775,7 +793,7 @@ R128
 \end{tabular}
 
         \subsubsection{Строковые типы}
-Переменная строкового типа хранит строковые значения. Строковый тип выглядит так:
+Переменная строкового типа хранит строковые значения. Символьный тип выглядит так:
 \begin{center}
 \noindent\textbf{строчка}
 \end{center}
@@ -861,7 +879,7 @@ R128
         
 
         \subsubsection{Пустой тип}
-Пустой тип --- это тип \textbf{ничего}. Тип \textbf{ничего} может быть либо базовым типом указателя, либо типом значения функции. Ни в каких других целях тип \textbf{ничего} применяться не может. При этом \texttt{\#\#}\textbf{ничего}$=0$, т.е. размер типа \textbf{ничего} равен нулю.
+Пустой тип --- это тип \textbf{ничего}. Тип \textbf{ничего} может быть либо базовым типом указателя, либо типом значения функции. Ни в каких других целях тип \textbf{ничегоо} применяться не может. При этом \texttt{\#\#}\textbf{ничего}$=0$, т.е. размер типа \textbf{ничего} равен нулю.
 
         \subsubsection{Кортежи}
 Кортеж --- это упорядоченный набор конечного числа элементов, вообще говоря, разных типов. Тип--кортеж выглядит так:
@@ -901,7 +919,7 @@ R128
         \subsubsection{Ссылки}
 Тип--ссылка выглядит так:        
 \begin{center}
-\noindent\textcolor{Green}{\syntax{(\textcolor{Black}{\textbf{ссылочка}}|\textcolor{Black}{\textbf{пост ссылочка}})\synt{простейшее_определение_типа}}}
+\noindent\textcolor{Green}{\syntax{(\textcolor{Black}{\textbf{ссылочка}}|\textcolor{Black}{\textbf{конст ссылочка}})\synt{простейшее_определение_типа}}}
 \end{center}
         
         \subsubsection{Типы указателей на функции}
@@ -989,7 +1007,7 @@ R128
 \textbf{пост} \texttt{N} : \textbf{целN} = 128;\\
 \hspace*{10mm} \texttt{M} : \textbf{целN} = 256\\
 \\
-\textbf{тип}\hspace*{5mm}\texttt{float} = \textbf{мал вещR};\\
+\textbf{тип}\hspace*{5mm}\texttt{float} = \textbf{маленькое вещR};\\
 \hspace*{12mm}\texttt{T1} = \textbf{массив}\texttt{[M] float};\\
 \hspace*{12mm}\texttt{T2} = \textbf{массив}\texttt{[N] T1}\\
 \\
@@ -1012,7 +1030,7 @@ R128
 \rm
 \textbf{перем} \texttt{A} : \textbf{массив}\texttt{[16]}\textbf{вещR};\\
 \hspace*{11mm} \texttt{B} : \textbf{массив}\texttt{[9, 11]}\textbf{вещR};\\
-\hspace*{11mm} \texttt{С} : \textbf{массив}\texttt{[17, 8, 19]}\textbf{вещR}\\
+\hspace*{11mm} \texttt{B} : \textbf{массив}\texttt{[17, 8, 19]}\textbf{вещR}\\
 \\
 \textit{Тогда $\texttt{A\#}0=16$, $\texttt{A\#}(-3)=0$, $\texttt{B\#}0=9$, $\texttt{B\#}(-5)=0$, $\texttt{B\#}1=11$, $\texttt{B\#}2=0$, $\texttt{B\#}1000=0$,
 $\texttt{A\#}1=0$, $\texttt{B[3]\#}0=11$, $\texttt{C\#}0=17$, $\texttt{C\#}1=8$, $\texttt{C\#}2=19$, $\texttt{C[5]\#}0=8$, $\texttt{C[5]\#}1=19$, $\texttt{C[5,4]\#}0=19$.}
@@ -1205,7 +1223,7 @@ $\texttt{A\#}1=0$, $\texttt{B[3]\#}0=11$, $\texttt{C\#}0=17$, $\texttt{C\#}1=8$,
 Синтаксис оператора выбора:
 
 \textcolor{Green}{\syntax{%
-\synt{оператор_выбора}$\to$\textcolor{Black}{\textbf{выбор}}\textcolor{Black}{\texttt{(}}\synt{S}\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{из}}%
+\synt{оператор_выбора}$\to$\textcolor{Black}{\textbf{выбери}}\textcolor{Black}{\texttt{(}}\synt{S}\textcolor{Black}{\texttt{)}}\textcolor{Black}{\textbf{из}}%
 \textcolor{Black}{\texttt{\{}}\\
 \synt{список_значений_для_ветви} \textcolor{Black}{\texttt{:}} \textcolor{Black}{\texttt{\{}}\synt{ветвь}\textcolor{Black}{\texttt{\}}}\\
 \{\synt{список_значений_для_ветви} \textcolor{Black}{\texttt{:}} \textcolor{Black}{\texttt{\{}}\synt{ветвь}\textcolor{Black}{\texttt{\}}}\}\\
@@ -1252,9 +1270,50 @@ $\texttt{A\#}1=0$, $\texttt{B[3]\#}0=11$, $\texttt{C\#}0=17$, $\texttt{C\#}1=8$,
 \indent\synt{S}$\to$\synt{выражение}
 }}
 
+ \subsection{Оператор кто}
+    Синтаксис оператора \textbf{\glqq  кто\grqq }:
+  \begin{center}
+    \textcolor{Green}{оператор_кто $\rightarrow$}\textbf{кто}( \textcolor{Green}{имена переменных $\vert $ тип переменных} )
+ \end{center}
+    Оператор  \textbf{\glqq  кто\grqq }  возвращает переменные, созданные во время программы, с указанием их типов и значений. При введении \textcolor{Green}{имена переменных} возвращает только типы и значения указанных переменных. При введении \textcolor{Green}{типа переменных}, возвращает все переменные, указанного типа. При отсутствии условий возвращает все переменные, созданные во время работа программы. Используя связку \textbf{\glqq кто подсчет \grqq } к возращаемым переменным добавляется их колличество, а так же обьем памяти, занимаемый на диске.
+    \subsection{Оператор удали}
+      \begin{center}
+    \textcolor{Green}{оператор_удали $\rightarrow$}\textbf{удали}( \textcolor{Green}{имена переменных $\vert $ тип переменных} )
+ \end{center}
+ Оператор  \textbf{\glqq  удали\grqq }  удаляет переменные, созданные во время программы, с указанием их типов и значений. При введении \textcolor{Green}{имена переменных} удаляет только типы и значения указанных переменных. При введении \textcolor{Green}{типа переменных}, удаляет все переменные, указанного типа. При отсутствии условий все переменные, созданные во время работа программы. 
+   \subsection{Оператор время}
+      \begin{center}
+      \syntax{
+    \textcolor{Green}{оператор_время $\rightarrow$}\textbf{\glqq время вкл\grqq }
+    \\
+    \textcolor{Green}{оператор_время $\rightarrow$}\textbf{\glqq время выкл\grqq }
+    }
+ \end{center}
+ Оператор  \textbf{\glqq  время\grqq } засекает время от начала работы {\glqq время вкл\glqq } до конца {\glqq время выкл\glqq } и возращает полученный результат в секундах.
+ 
+ \subsection{Оператор рандом}
+      \begin{center}
+      \syntax{
+    \textcolor{Green}{оператор_рандом $\rightarrow$}\textbf{\glqq рандом\grqq }(\textcolor{Green}{промежуток})
+    }
+ \end{center}
+ Оператор  \textbf{\glqq  рандом\grqq } произвольно выбирает значение из указанного числового промежутка и возращает полученный результат. textcolor{Green}{промежуток} - упорядоченный по возрастанию целочисленный массив, где первому элементу соответсвует минимальное значение промежутка, а последнему максимальное.
+ \subsection{Оператор min}
+    Синтаксис оператора \textbf{\glqq  min\grqq }:
+  \begin{center}
+    \textcolor{Green}{оператор_min $\rightarrow$}\textbf{min}( \textcolor{Green}{имя массива} )
+ \end{center}
+ Оператор \textbf{\glqq  min\grqq } возращает минимальное значение, содержащеся в массиве числового типа, в противном случае выдает ошибку.
+ \subsection{Оператор max}
+    Синтаксис оператора \textbf{\glqq  max\grqq }:
+  \begin{center}
+    \textcolor{Green}{оператор_max $\rightarrow$}\textbf{max}( \textcolor{Green}{имя массива} )
+ \end{center}
+ Оператор \textbf{\glqq max\grqq } возращает максимальное значение, содержащеся в массиве числового типа, в противном случае выдает ошибку.
+ 
     \subsection{Операторы цикла}
 Операторы цикла организуют выполнение повторяющихся действий. Всего в языке есть четыре типа операторов цикла: оператор цикла с предусловием (оператор \textbf{\glqq пока\grqq}),
-оператор цикла с постусловием (оператор \textbf{\glqq повтор\dots пока\grqq}), оператор \textbf{\glqq бесконечно повтор\grqq}, оператор \textbf{\glqq для\grqq}. Опишем каждый из этих операторов.
+оператор цикла с постусловием (оператор \textbf{\glqq повторяй\dots пока\grqq}), оператор \textbf{\glqq вечно повторяй\grqq}, оператор \textbf{\glqq для\grqq}. Опишем каждый из этих операторов.
         \subsubsection{Оператор цикла с предусловием}
 Оператор цикла с предусловием выглядит так:
 \begin{center}
@@ -1280,7 +1339,7 @@ $\texttt{A\#}1=0$, $\texttt{B[3]\#}0=11$, $\texttt{C\#}0=17$, $\texttt{C\#}1=8$,
 Оператор \textbf{\glqq повторяй\dots бесконечно\grqq} выглядит так:
 \begin{center}
 \textcolor{Green}{\syntax{[\textcolor{Black}{\texttt{+|}}\synt{имя_цикла}\textcolor{Black}{\texttt{:}}]%
-\textcolor{Black}{\textbf{бесконечно}} \textcolor{Black}{\textbf{повторяй}}\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} }}
+\textcolor{Black}{\textbf{бесконеечно}} \textcolor{Black}{\textbf{повторяй}}\textcolor{Black}{\texttt{\{}} \{\synt{описание}|\synt{операторы}\} \textcolor{Black}{\texttt{\}}} }}
 \end{center}
 Здесь \textcolor{Green}{\syntax{\synt{имя_цикла}}} --- идентификатор, являющийся именем цикла. Данный идентификатор можно использовать только в операторе выхода из цикла.
 Оператор \textbf{\glqq вечно повторяй\grqq} выполняется до тех пор, пока из него не будет совершён явный выход --- либо с помощью оператора выхода из цикла, либо с
@@ -1354,6 +1413,16 @@ $\texttt{A\#}1=0$, $\texttt{B[3]\#}0=11$, $\texttt{C\#}0=17$, $\texttt{C\#}1=8$,
 с помощью оператора возврата, имеющего вид \textbf{вернуть}. Если же тип возвращаемого функцией значения не эквивалентен типу \textbf{ничего}, то возврат выполняется
 с помощью оператора возврата, имеющего вид \textbf{вернуть} \textcolor{Green}{\syntax{\synt{выражение}}}, причём тип выражения должен быть совместим с типом
 возвращаемого функцией значения.
+
+ \subsection{Оператор входа в цикл}
+
+Синтаксис оператора входа в цикл:
+\begin{center}
+\textcolor{Green}{\syntax{\textcolor{Black}{\textbf{вход}} [\textcolor{Black}{\textbf{в}} \synt{имя_цикла}]}}
+\end{center}
+Этот оператор совершает вход из в цикла с именем \textcolor{Green}{\syntax{\synt{имя_цикла}}}.
+
+
          
 \chapter{Стандартная библиотека}
     \section{Математические функции}
